@@ -18,17 +18,30 @@
         <tr>
             <th>Task</th>
             <th>Added</th>
+            <th>complete</th>
             <th>Actions</th>
+            
         </tr>
         {% for task in tasks %}
         <tr>
             <td>{{ task.content }}</td>
             <td>{{ task.date_created.date() }}</td>
             <td>
+                {% if task.completed == 1 %}
+                <s>{{ task.content }}</s> <!-- Display task with strike-through if completed -->
+            {% else %}
+                {{ task.content }} <!-- Display task normally if not completed -->
+            {% endif %}
+            
+            <!-- Link to mark task as complete/incomplete -->
+            <a href="/complete/{{ task.id }}">Complete</a>
+            </td>
+            <td>
                 <a href="/delete/{{task.id}}">Delete</a>
                 <br>
                 <a href="/update/{{task.id}}">Update</a>
             </td>
+            
         </tr>
         {% endfor %}
     </table>

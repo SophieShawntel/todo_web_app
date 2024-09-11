@@ -60,6 +60,19 @@ def update(id):
     else:
         return render_template('update.html', task=task) 
     
+@app.route('/complete/<int:id>')
+def complete(id):
+    task = Todo.query.get_or_404(id)
+
+    # Toggle the task completion status
+    task.completed = 1 if task.completed == 0 else 0
+
+    try:
+        db.session.commit()
+        return redirect('/')
+    except:
+        return "There was a problem marking the task as complete"
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
